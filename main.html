@@ -4,10 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DriveRenamer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 </head>
 <body>
-    <button id="btn_SignIn" onclick="authenticate()" style="display: none;">SignIn</button>
+    <div class="page">
+        <header>
+            <img src="https://www.gstatic.com/images/branding/productlogos/drive_2026/v1/web-48dp/logo_drive_2026_color_1x_web_48dp.png">
+            <h1 class="google-sans-font title">Drive Renamer</h1>
+            <button class="google-sans-font" id="btn_SignIn" onclick="authenticate()" style="display: none;">SignIn</button>
+            <button class="google-sans-font" onclick="main()">Fetch</button>
+        </header>
+        <section>
+            <div class="div_files" id="div_files">  
+            </div>
+        </section>
+    </div>
 </body>
 </html>

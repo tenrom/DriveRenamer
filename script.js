@@ -38,9 +38,9 @@ function authenticate(){
 }
 
 function initialization(){
-    console.log(CLIENT_ID)
     if (urlParams.get("token")){
         console.log(urlParams.get("token"))
+        ACCESS_TOKEN=urlParams.get("token")
     }else if(urlParams.get("code")){
         if (localStorage.getItem('client_secret')){
             CLIENT_SECRET=localStorage.getItem('client_secret')
@@ -48,7 +48,6 @@ function initialization(){
             CLIENT_SECRET=prompt('Password')
             localStorage.setItem('client_secret',CLIENT_SECRET)
         }
-
         exchangeCodeForTokens(urlParams.get('code'),()=>{
             urlParams.delete('code',urlParams.get('code'))
             urlParams.set('token',ACCESS_TOKEN)
@@ -57,6 +56,7 @@ function initialization(){
     }else{
         document.getElementById('btn_SignIn').style.display="block"
     }
+    main()
 }
 
 function exchangeCodeForTokens(code,after,refresh) {
@@ -124,3 +124,63 @@ function exchangeCodeForTokens(code,after,refresh) {
         
     });
 }
+
+
+function main(){
+
+    let params = new URLSearchParams({
+        fields: "*",
+        access_token: ACCESS_TOKEN,
+        orderBy:"folder,name",
+        q:`"${urlParams.get("id") || "root"}" in parents and trashed = false`
+    })
+
+    fetch(`https://www.googleapis.com/drive/v3/files?${params.toString()}`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+        .then(res => res.json())
+        .then(json => {
+            console.log(json)
+            let container=document.getElementById('div_files')
+            let html=""
+
+            for(let file of json.files){
+                html+=`<card-file data-folderId="${file.mimeType==="application/vnd.google-apps.folder" ? file.id : ""}" data-quality="64" data-icon="${file.iconLink}" data-name="${file.name}" data-fileLink="${file.webViewLink}"></card-file>`
+            }
+
+            container.innerHTML=html+"<div style='width:100%;height:20px;'></div>"
+        })
+}
+
+class file extends HTMLElement{
+    constructor(){
+        super()
+    }
+    connectedCallback(){
+        this.style=`
+        width:100%;
+        `
+
+        this.innerHTML=`
+        <div style="width:100%;height:50px;display:flex;flex-direction:row;justify-content:left;align-items:center;gap:10px;border-bottom:1px solid #c7c7c7">
+            <img style="height:${this.getAttribute("data-folderId") ? 30 : 20}px;margin:0px ${this.getAttribute("data-folderId") ? 0 : 5}px;" src="${this.getAttribute('data-icon').replace("16",this.getAttribute('data-quality') || "16")}">
+            <h2 class="google-sans-font" style="color:#1f1f1f;font-weight:500;font-size:1rem;">${this.getAttribute('data-name')}</h2>
+        </div>
+        `
+
+        this.addEventListener('click',()=>{
+            if (this.getAttribute("data-folderId")) {
+                urlParams.set("id",this.getAttribute("data-folderId"))
+                open(location.href.replace(location.search,"")+"?"+urlParams.toString(),"_self")
+            }
+            else {
+                open(this.getAttribute("data-fileLink"),"_blank")
+            }
+        })
+    }
+}
+
+window.customElements.define("card-file",file)
