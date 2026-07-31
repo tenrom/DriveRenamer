@@ -42,11 +42,11 @@ function initialization(){
         console.log(urlParams.get("token"))
         ACCESS_TOKEN=urlParams.get("token")
     }else if(urlParams.get("code")){
-        if (localStorage.getItem('client_secret')){
-            CLIENT_SECRET=localStorage.getItem('client_secret')
+        if (localStorage.getItem('client_secret_DriveRenamer')){
+            CLIENT_SECRET=localStorage.getItem('client_secret_DriveRenamer')
         }else{
             CLIENT_SECRET=prompt('Password')
-            localStorage.setItem('client_secret',CLIENT_SECRET)
+            localStorage.setItem('client_secret_DriveRenamer',CLIENT_SECRET)
         }
         exchangeCodeForTokens(urlParams.get('code'),()=>{
             urlParams.delete('code',urlParams.get('code'))
