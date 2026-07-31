@@ -20,16 +20,33 @@
   font-variation-settings: "GRAD" 0;
 }
 
-button{
+.primary-btn{
     margin: 0;
     padding: 15px 35px;
     border-radius: 16px;
     background-color: white;
     border: none;
-    box-shadow: 0px 2px 3px #585858;
+    box-shadow: 0px 2px 3px #58585878;
     color: #1f1f1f;
     font-size: 1rem;
     font-weight: 500;
+}
+
+.secondary-btn{
+    margin: 0;
+    padding: 15px 15px;
+    border-radius: 16px;
+    background-color: transparent;
+    border: none;
+    color: #0b57d0;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 100vh;
+    transition: background-color 100ms ease-in-out;
+
+    &:hover{
+        background-color: #eaf1fb86;
+    }
 }
 
 header{
@@ -61,4 +78,50 @@ section{
     width: 100%;
     height: 100%;
     overflow: scroll;
+}
+
+.modals{
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.32);
+}
+
+.modal{
+    background-color: #ffffff;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    pointer-events: all;
+}
+
+.modal-rename{
+    width: calc(349px - 48px);
+    height: calc(216px - 48px);
+    gap: 15px;
+}
+
+.modal-rename h2{
+    margin: 0;
+    margin-top: 10px;
+    font-size: 1.5rem;
+}
+
+.modal-rename input{
+    height: 100%;
+    border: none;
+    outline: solid 1px #1f1f1f;
+    border-radius: 5px;
+    padding: 0px 15px;
+    font-size: 1rem;
+
+    &:hover{
+        outline: solid 2px #0b57d0;
+    }
 }

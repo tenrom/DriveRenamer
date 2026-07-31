@@ -8,20 +8,31 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
     <div class="page">
         <header>
             <img src="https://www.gstatic.com/images/branding/productlogos/drive_2026/v1/web-48dp/logo_drive_2026_color_1x_web_48dp.png">
             <h1 class="google-sans-font title">Drive Renamer</h1>
-            <button class="google-sans-font" id="btn_SignIn" onclick="authenticate()" style="display: none;">SignIn</button>
-            <button class="google-sans-font" onclick="main()">Fetch</button>
+            <button class="google-sans-font primary-btn" id="btn_SignIn" onclick="authenticate()" style="display: none;">SignIn</button>
+            <button class="google-sans-font primary-btn" onclick="renameAll()"><svg height="20" viewBox="0 -960 960 960" width="20" focusable="false" class="Q6yead QJZfhe fzwvuc"><path d="m351-144 144-144h369v144H351Zm-183-72h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T747-642L249-144H96Zm600-549-51-51 51 51Zm-127.95 76.95L543-642l51 51-25.95-25.05Z"></path></svg> RenameAll</button>
         </header>
         <section>
-            <div class="div_files" id="div_files">  
+            <div class="div_files" id="div_files">
             </div>
         </section>
+        
+    </div>
+    <div class="modals" id="modals" style="display: none;" onclick="hideModal()">
+        <div class="modal modal-rename" onclick="event.stopPropagation()">
+            <h2 class="google-sans-font">Rename</h2>
+            <input class="google-sans-font" type="text" value="Filename" id="modal-rename-input">
+            <div style="display:flex;flex-direction: row;justify-content: right;align-items: center;gap: 10px;">
+                <button class="google-sans-font secondary-btn" id="modal-rename-cancel-btn" onclick="hideModal()">Cancel</button>
+                <button class="google-sans-font secondary-btn" id="modal-rename-Ok-btn" onclick="renameFile(currentFileRename,document.getElementById('modal-rename-input').value)">Ok</button>
+            </div>
+        </div>
     </div>
 </body>
 </html>
