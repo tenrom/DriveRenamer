@@ -107,13 +107,26 @@ section{
     gap: 15px;
 }
 
-.modal-rename h2{
+.modal-copy{
+    width: calc(349px - 48px);
+    height: calc(321px - 48px);
+    gap: 15px;
+}
+
+.modal-copyProgress{
+    width: calc(349px - 48px);
+    height: calc(321px - 48px);
+    gap: 15px;
+}
+
+
+.modal h2{
     margin: 0;
     margin-top: 10px;
     font-size: 1.5rem;
 }
 
-.modal-rename input{
+.modal input{
     height: 100%;
     border: none;
     outline: solid 1px #1f1f1f;
@@ -124,4 +137,14 @@ section{
     &:hover{
         outline: solid 2px #0b57d0;
     }
+}
+
+.modal-copyProgress-progress{
+    height: 10px;
+}
+
+.btn-block{
+    user-select: none;
+    color: #667285;
+    pointer-events: none;
 }

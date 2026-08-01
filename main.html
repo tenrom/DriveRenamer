@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DriveRenamer</title>
+    <link rel="shortcut icon" href="favicon.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
@@ -13,10 +14,11 @@
 <body>
     <div class="page">
         <header>
-            <img src="https://www.gstatic.com/images/branding/productlogos/drive_2026/v1/web-48dp/logo_drive_2026_color_1x_web_48dp.png">
+            <img src="logo.png">
             <h1 class="google-sans-font title">Drive Renamer</h1>
             <button class="google-sans-font primary-btn" id="btn_SignIn" onclick="authenticate()" style="display: none;">SignIn</button>
             <button class="google-sans-font primary-btn" onclick="renameAll()"><svg height="20" viewBox="0 -960 960 960" width="20" focusable="false" class="Q6yead QJZfhe fzwvuc"><path d="m351-144 144-144h369v144H351Zm-183-72h51l375-375-51-51-375 375v51Zm-72 72v-153l498-498q11-11 23.84-16 12.83-5 27-5 14.16 0 27.16 5t24 16l51 51q11 11 16 24t5 26.54q0 14.45-5.02 27.54T747-642L249-144H96Zm600-549-51-51 51 51Zm-127.95 76.95L543-642l51 51-25.95-25.05Z"></path></svg> RenameAll</button>
+            <button class="google-sans-font primary-btn" onclick="createFolder('FolderTest',urlParams.get('id'))">CreateNewFolder</button>
         </header>
         <section>
             <div class="div_files" id="div_files">
@@ -31,6 +33,24 @@
             <div style="display:flex;flex-direction: row;justify-content: right;align-items: center;gap: 10px;">
                 <button class="google-sans-font secondary-btn" id="modal-rename-cancel-btn" onclick="hideModal()">Cancel</button>
                 <button class="google-sans-font secondary-btn" id="modal-rename-Ok-btn" onclick="renameFile(currentFileRename,document.getElementById('modal-rename-input').value)">Ok</button>
+            </div>
+        </div>
+        <div class="modal modal-copy" onclick="event.stopPropagation()">
+            <h2 class="google-sans-font">Copy</h2>
+            <h2 class="google-sans-font" style="font-size: 1rem;margin-top: 0;">Copy the drive's url of the folder where you want to place the copy.</h2>
+            <input class="google-sans-font" type="text" value="Filename" id="modal-copy-input" placeholder="https://drive.google.com/drive/folders/XXX">
+            <h2 class="google-sans-font" style="font-size: 1rem;margin-top: 0;">Or put nothing to place here.</h2>
+            <div style="display:flex;flex-direction: row;justify-content: right;align-items: center;gap: 10px;">
+                <button class="google-sans-font secondary-btn" id="modal-copy-cancel-btn" onclick="hideModal()">Cancel</button>
+                <button class="google-sans-font secondary-btn" id="modal-copy-Ok-btn" onclick="copyFile(currentFileCopy.mimeType==='application/vnd.google-apps.shortcut' ? currentFileCopy.isFolder : currentFileCopy.id,currentFileCopy.name,currentFileCopy.mimeType,document.getElementById('modal-copy-input').value)">Ok</button>
+            </div>
+        </div>
+        <div class="modal modal-copyProgress" onclick="event.stopPropagation()">
+            <h2 class="google-sans-font">Copy progression</h2>
+            <h2 class="google-sans-font" style="font-size: 1rem;margin-top: 0;">Your file/folder is currently being copied.<br>Wait until it's finish...</h2>
+            <progress class="modal-copyProgress-progress" id="modal-copyProgress-progress" value="50" max="100">50%</progress>
+            <div style="display:flex;flex-direction: row;justify-content: right;align-items: center;gap: 10px;">
+                <button class="google-sans-font secondary-btn" id="copyProgress-cancel-btn" onclick="hideModal()">Finish</button>
             </div>
         </div>
     </div>
