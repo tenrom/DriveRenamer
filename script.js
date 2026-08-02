@@ -103,6 +103,7 @@ function exchangeCodeForTokens(code,after,refresh) {
         // This is the data you need to store and use!
         console.log('Successfully received tokens:');
         console.log('Access Token:', tokenData.access_token);
+        console.log(tokenData)
         console.log('Refresh Token:', tokenData.refresh_token);
         console.log('Expires In:', tokenData.expires_in);
         console.log('Scope:', tokenData.scope);
@@ -530,16 +531,16 @@ async function copyFolder(fileId,fileName,parentId,after){
         let res=copySingleFile(file[0],file[1],corresFolderId[file[3]],(json)=>{
             if (json.error){
                 console.error("FILE DON'T CREATE")
+                console.log("FILE:", file,json)
             }
-            console.log(json)
 
             n++
             UpdateProgressBarCopy(20+80*(n/len))
         })
         k++
-        if(Math.floor(k/10)>step){
+        if(Math.floor(k/20)>step){
             //delay to not over kill the server
-            delay(1000)
+            await delay(1000)
             step++
         }
     }
